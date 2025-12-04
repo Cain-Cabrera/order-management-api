@@ -11,6 +11,6 @@ public interface PedidoServiceImple {
     Pedido createPedido(Pedido entidad);
     List<Pedido> findAll();
     Pedido findById(Long id);
-    Pedido updatePedido(Pedido entidad);
+    Pedido updatePedido(Long id,Pedido entidad);
     void deletePedido(Long id);  
 }
