@@ -5,6 +5,7 @@ import com.proyecto.GestionDePedidos.Mapper.PedidoMapper;
 import com.proyecto.GestionDePedidos.Repository.ClienteRepository;
 import com.proyecto.GestionDePedidos.Repository.PedidoRepository;
 import com.proyecto.GestionDePedidos.models.Cliente;
+import com.proyecto.GestionDePedidos.models.DetalleDePedido;
 import com.proyecto.GestionDePedidos.models.Pedido;
 import com.proyecto.GestionDePedidos.validatorService.PedidoValidator;
 import jakarta.persistence.EntityNotFoundException;
@@ -41,6 +42,9 @@ public class PedidoServiceImple implements PedidoService{
         Cliente clienteExistente = clienteRepository.findById(pedidoDto.getIdCliente())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado."));
         Pedido pedido = pedidoMapper.toEntity(pedidoDto,clienteExistente);
+        
+        
+        
         return pedidoRepository.save(pedido);
     }
     
