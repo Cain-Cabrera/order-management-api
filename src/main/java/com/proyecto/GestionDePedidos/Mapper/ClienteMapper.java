@@ -1,6 +1,7 @@
 package com.proyecto.GestionDePedidos.Mapper;
 
 import com.proyecto.GestionDePedidos.DTO.ClienteDTO;
+import com.proyecto.GestionDePedidos.DTO.ClienteResponseDTO;
 import com.proyecto.GestionDePedidos.models.Cliente;
 import org.springframework.stereotype.Component;
 /**
@@ -22,5 +23,13 @@ public class ClienteMapper {
         clienteExistente.setNombre(dto.getNombre());
         clienteExistente.setApellido(dto.getApellido());
         clienteExistente.setDni(dto.getDni());
+    }
+    
+    public ClienteResponseDTO toResponse(Cliente cliente) {
+        ClienteResponseDTO clienteReponse = new ClienteResponseDTO();
+        clienteReponse.setId(cliente.getIdCliente());
+        clienteReponse.setApellido(cliente.getApellido());
+        clienteReponse.setNombre(cliente.getNombre());
+        return clienteReponse;
     }
 }
