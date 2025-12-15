@@ -27,4 +27,5 @@ public class PedidoResponseDTO {
         this.estado = estado;
         this.cliente = cliente;
     }
+
 }
