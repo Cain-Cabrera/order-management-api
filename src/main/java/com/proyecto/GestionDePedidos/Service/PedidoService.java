@@ -12,6 +12,5 @@ public interface PedidoService {
     PedidoResponseDTO createPedido(PedidoRequestDTO pedidoDto);
     List<PedidoResponseDTO> findAll();
     PedidoResponseDTO findById(Long id);
-    PedidoResponseDTO updatePedido(PedidoRequestDTO pedidoDto);
     void deletePedido(Long id);
 }

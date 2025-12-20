@@ -82,7 +82,7 @@ public class ClienteServiceImple implements ClienteService {
     public ClienteResponseDTO findById(Long id) {
         logger.trace("Se ejecuta medoto findById para buscar un Cliente..");
         Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
         logger.info("Cliente con id {} encontrado con exito", id);
         return clienteMapper.toResponse(cliente);
     }
