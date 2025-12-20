@@ -17,8 +17,6 @@ public class PedidoMapper {
     
     public Pedido toEntity(PedidoRequestDTO pedidoDto, Cliente cliente) {
         Pedido pedidoEntity = new Pedido();
-        pedidoEntity.setFecha(pedidoDto.getFecha());
-        pedidoEntity.setEstado(pedidoDto.getEstado());
         pedidoEntity.setCliente(cliente);
         return pedidoEntity;
     }
@@ -32,11 +30,6 @@ public class PedidoMapper {
         return pedidoResponse;
     }
     
-    public void updateEntity(Pedido pedidoExistente, PedidoRequestDTO pedidoDto) {
-        pedidoExistente.setEstado(pedidoDto.getEstado());
-        pedidoExistente.setFecha(pedidoDto.getFecha());
-    }
-    
     public List<PedidoResponseDTO> toResponseList(List<Pedido> listaDePedidos) {
         List<PedidoResponseDTO> listaResponse = new ArrayList<>();
         for (Pedido pedido : listaDePedidos) {
@@ -44,5 +37,5 @@ public class PedidoMapper {
         }
         return listaResponse;
     }
-    
+        
 }
