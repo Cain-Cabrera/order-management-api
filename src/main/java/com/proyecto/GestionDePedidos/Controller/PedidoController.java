@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 /**
  *
  * @author Cain
  */
+@RequestMapping("/pedidos")
 @RestController
 public class PedidoController {
     private final PedidoService pedidoService;
@@ -29,21 +30,21 @@ public class PedidoController {
         this.pedidoService = pedidoService;
     }
     
-    @PostMapping("/pedido")
+    @PostMapping
     public ResponseEntity<PedidoResponseDTO> createPedido(@Valid @RequestBody PedidoRequestDTO pedidoRequest) {
         logger.trace("Se ejecuta createPedido para dar de alta entidad pedido..");
         PedidoResponseDTO response = pedidoService.createPedido(pedidoRequest);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
     
-    @GetMapping("/pedidos")
+    @GetMapping
     public ResponseEntity<List<PedidoResponseDTO>> findAll() {
         logger.trace("Se ejectua findAll para traer todos los pedidos existentes..");
         List<PedidoResponseDTO> response = pedidoService.findAll();
         return new ResponseEntity(response, HttpStatus.OK);
     } 
     
-    @GetMapping("/pedido/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PedidoResponseDTO> findById(@PathVariable Long id) {
         logger.info("Se ejecuta finByid para traer entidad via id");
         PedidoResponseDTO response = pedidoService.findById(id);
@@ -51,10 +52,10 @@ public class PedidoController {
     }
             
             
-    @DeleteMapping("/pedido/{id}")
-    public ResponseEntity<String> deletePedido(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePedido(@PathVariable Long id) {
         logger.info("Se ejecuta metodo deletePedido para borrar pedido existente..");
         pedidoService.deletePedido(id);
-        return new ResponseEntity(HttpStatus.OK);
+         return ResponseEntity.noContent().build();
     }  
 }
