@@ -2,11 +2,12 @@ package com.proyecto.GestionDePedidos.Service;
 
 import com.proyecto.GestionDePedidos.DTO.ClienteRequestDTO;
 import com.proyecto.GestionDePedidos.DTO.ClienteResponseDTO;
+import com.proyecto.GestionDePedidos.Exception.ClienteNotFoundException;
+import com.proyecto.GestionDePedidos.Exception.InvalidIdException;
 import com.proyecto.GestionDePedidos.Mapper.ClienteMapper;
 import com.proyecto.GestionDePedidos.Repository.ClienteRepository;
 import com.proyecto.GestionDePedidos.validatorService.ClienteValidator;
 import com.proyecto.GestionDePedidos.models.Cliente;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class ClienteServiceImple implements ClienteService {
     private Cliente findByidEntity(Long id) {
         logger.trace("Se ejecuta implementacion privada para buscar entidad via id");
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+                .orElseThrow(() -> new ClienteNotFoundException(id));
     }
     
     @Override
@@ -50,7 +51,7 @@ public class ClienteServiceImple implements ClienteService {
     public ClienteResponseDTO updateCliente(Long id, ClienteRequestDTO clienteDto) {
         logger.trace("Se ejecuta updateCliente para actualizar informacion del cliente..");
         Cliente clienteExistente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente no encontrado."));
+                .orElseThrow(() -> new ClienteNotFoundException(id));
         clienteValidator.validarClienteDTO(clienteDto);
         clienteMapper.mapperUpdateEntidad(clienteDto, clienteExistente);
         clienteRepository.save(clienteExistente);
@@ -63,7 +64,7 @@ public class ClienteServiceImple implements ClienteService {
         logger.trace("Se ejecuta deleteCliente para borrar Cliente..");
         if (id <= 0) {
             logger.error("ID inválido para borrar Cliente: {}" , id);
-            throw new IllegalArgumentException("El id debe ser mayor a 0");
+            throw new InvalidIdException("Cliente",id);
         }
         
         Cliente cliente = findByidEntity(id);
@@ -82,7 +83,7 @@ public class ClienteServiceImple implements ClienteService {
     public ClienteResponseDTO findById(Long id) {
         logger.trace("Se ejecuta medoto findById para buscar un Cliente..");
         Cliente cliente = clienteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
+                .orElseThrow(() -> new ClienteNotFoundException(id));
         logger.info("Cliente con id {} encontrado con exito", id);
         return clienteMapper.toResponse(cliente);
     }
