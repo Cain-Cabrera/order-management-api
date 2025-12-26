@@ -2,8 +2,11 @@ package com.proyecto.GestionDePedidos.Exception;
 
 import com.proyecto.GestionDePedidos.DTO.ApiResponseError;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -63,6 +66,23 @@ public class GlobalExceptionHandler {
             HttpStatus.BAD_REQUEST.getReasonPhrase());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponseError> handleValidationErrors(MethodArgumentNotValidException ex,HttpServletRequest request) {
+        Map<String, String> errors = new HashMap<>();
+            ex.getBindingResult()
+            .getFieldErrors()
+            .forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage()));
+
+        ApiResponseError responseError = new ApiResponseError(
+            HttpStatus.BAD_REQUEST.value(),
+            "Error de validación",
+            request.getRequestURI(),
+            HttpStatus.BAD_REQUEST.getReasonPhrase(),
+            errors);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseError);
+}
 
 
 
