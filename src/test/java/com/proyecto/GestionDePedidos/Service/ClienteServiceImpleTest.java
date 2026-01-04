@@ -12,8 +12,10 @@ import com.proyecto.GestionDePedidos.validatorService.ClienteValidator;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -80,7 +82,12 @@ public class ClienteServiceImpleTest {
         ClienteRequestDTO clienteRequest = ClienteRequestTestBuilder.unClienteRequest()
                 .conNombre(null)
                 .build();
+        
+        doThrow(new IllegalArgumentException("Nombre inválido"))
+            .when(clienteValidator)
+            .validarClienteDTO(any(ClienteRequestDTO.class));
 
+        
         assertThrows(IllegalArgumentException.class, () -> {
             clienteServiceImple.createCliente(clienteRequest);
         }); 
