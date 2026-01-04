@@ -1,11 +1,13 @@
 package com.proyecto.GestionDePedidos.validatorService;
 
 import com.proyecto.GestionDePedidos.DTO.ProductoRequestDTO;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Cain
  */
+@Component
 public class ProductoValidator {
     public void validarAlta(ProductoRequestDTO productoDTO) {
         if (productoDTO.getNombre() == null || productoDTO.getNombre().trim().isEmpty()) {
