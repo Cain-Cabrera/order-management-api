@@ -5,11 +5,13 @@ import com.proyecto.GestionDePedidos.DTO.ProductoResponseDTO;
 import com.proyecto.GestionDePedidos.models.Producto;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Cain
  */
+@Component
 public class ProductoMapper {
     
     public Producto toEntity(ProductoRequestDTO productoDTO) {
